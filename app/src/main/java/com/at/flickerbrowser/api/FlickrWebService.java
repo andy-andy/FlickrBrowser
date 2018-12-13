@@ -2,17 +2,14 @@ package com.at.flickerbrowser.api;
 
 import android.arch.lifecycle.LiveData;
 
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
+import com.at.flickerbrowser.models.FlickrResponse;
+import com.at.flickerbrowser.repo.ApiResponse;
+
 import retrofit2.http.POST;
 
 public interface FlickrWebService {
 
-//    @FormUrlEncoded
-//    @POST("appconfig/o/token/")
-//    LiveData<ApiResponse<ConfigToken>> getConfigToken(@Field("grant_type") String grantType,
-//                                                      @Field("client_id") String clientId,
-//                                                      @Field("client_secret") String clientSecret
-//    );
+    @POST("services/feeds/photos_public.gne?format=json")
+    LiveData<ApiResponse<FlickrResponse>> fetchItems();
 
 }

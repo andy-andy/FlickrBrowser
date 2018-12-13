@@ -21,7 +21,7 @@ public class NetworkModule {
     @Provides
     @Named("FlickrBaseUrl")
     String provideFlickrBaseUrl() {
-        return "https://api-test.com/";
+        return "https://api.flickr.com/";
     }
 
     @Provides
