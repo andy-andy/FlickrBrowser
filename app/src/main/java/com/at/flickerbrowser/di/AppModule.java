@@ -3,7 +3,7 @@ package com.at.flickerbrowser.di;
 import android.app.Application;
 
 import com.at.flickerbrowser.App;
-import com.at.flickerbrowser.MainActivity;
+import com.at.flickerbrowser.activity.MainActivity;
 
 import javax.inject.Singleton;
 

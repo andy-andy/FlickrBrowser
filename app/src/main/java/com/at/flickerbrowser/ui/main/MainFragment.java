@@ -5,21 +5,32 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
-import com.at.flickerbrowser.MainActivity;
 import com.at.flickerbrowser.R;
+import com.at.flickerbrowser.activity.MainActivity;
+import com.at.flickerbrowser.models.FlickrResponse;
+import com.at.flickerbrowser.repo.Resource;
+import com.at.flickerbrowser.repo.Status;
+import com.at.flickerbrowser.viewmodels.MainViewModel;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import dagger.android.support.AndroidSupportInjection;
 
 public class MainFragment extends Fragment {
 
     @Inject
     MainViewModel mViewModel;
+
+    @BindView(R.id.refresh_btn)
+    Button mRefreshBtn;
 
     public static MainFragment newInstance() {
         return new MainFragment();
@@ -38,13 +49,28 @@ public class MainFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.main_fragment, container, false);
+        View rootView = inflater.inflate(R.layout.main_fragment, container, false);
+        ButterKnife.bind(this, rootView);
+        return rootView;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        // TODO: Use the ViewModel
-    }
 
+        mViewModel.getFlickrFeed().observe(this, new android.arch.lifecycle.Observer<Resource<FlickrResponse>>() {
+            @Override
+            public void onChanged(@Nullable Resource<FlickrResponse> flickrResponseResource) {
+                if (flickrResponseResource != null) {
+                    if (flickrResponseResource.getStatus() == Status.LOADING) {
+                        Log.i("blah", "Loading...");
+                    } else if (flickrResponseResource.getStatus() == Status.ERROR) {
+                        Log.i("blah", "Error" + flickrResponseResource.getMessage());
+                    } else if (flickrResponseResource.getStatus() == Status.SUCCESS) {
+                        Log.i("blah", "Error" + flickrResponseResource.getData());
+                    }
+                }
+            }
+        });
+    }
 }

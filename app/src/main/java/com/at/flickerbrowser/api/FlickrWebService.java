@@ -10,6 +10,6 @@ import retrofit2.http.POST;
 public interface FlickrWebService {
 
     @POST("services/feeds/photos_public.gne?format=json")
-    LiveData<ApiResponse<FlickrResponse>> fetchItems();
+    LiveData<ApiResponse<FlickrResponse>> fetchFlickrFeed();
 
 }

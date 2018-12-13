@@ -1,4 +1,4 @@
-package com.at.flickerbrowser
+package com.at.flickerbrowser.util
 
 import android.os.Handler
 import android.os.Looper
