@@ -1,11 +1,19 @@
 package com.at.flickerbrowser.models;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+@Entity
 public class FlickrResponse {
+
+    @PrimaryKey(autoGenerate = true)
+    private int id;
 
     @SerializedName("title")
     @Expose
@@ -24,7 +32,8 @@ public class FlickrResponse {
     private String generator;
     @SerializedName("items")
     @Expose
-    private List<Item> items = null;
+    @Ignore
+    private List<Item> items;
 
     public String getTitle() {
         return title;
@@ -74,4 +83,11 @@ public class FlickrResponse {
         this.items = items;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

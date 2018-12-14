@@ -9,7 +9,7 @@ import retrofit2.http.POST;
 
 public interface FlickrWebService {
 
-    @POST("services/feeds/photos_public.gne?format=json")
+    @POST("services/feeds/photos_public.gne?format=json&nojsoncallback=1")
     LiveData<ApiResponse<FlickrResponse>> fetchFlickrFeed();
 
 }

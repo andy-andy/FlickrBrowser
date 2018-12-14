@@ -14,7 +14,7 @@ import dagger.android.ContributesAndroidInjector;
 /**
  * Provides application-wide dependencies.
  */
-@Module(includes = {NetworkModule.class})
+@Module(includes = {NetworkModule.class, DbModule.class})
 abstract class AppModule {
 
     @Binds
