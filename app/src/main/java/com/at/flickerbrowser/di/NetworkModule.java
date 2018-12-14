@@ -49,9 +49,9 @@ public class NetworkModule {
     @Provides
     @Singleton
     @Named("FlickrRetrofit")
-    public Retrofit provideFlickrRetrofit(@Named("FlickrBaseUrl") String flickrBaseUrl, OkHttpClient okHttpClient) {
+    public Retrofit provideFlickrRetrofit(@Named("FlickrBaseUrl") String baseUrl, OkHttpClient okHttpClient) {
         return new Retrofit.Builder()
-                .baseUrl(flickrBaseUrl)
+                .baseUrl(baseUrl)
                 .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(new LiveDataCallAdapterFactory())
@@ -60,8 +60,8 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    public FlickrWebService provideFlickrWebService(@Named("FlickrRetrofit") Retrofit flickrRetrofit) {
-        return flickrRetrofit.newBuilder().build().create(FlickrWebService.class);
+    public FlickrWebService provideFlickrWebService(@Named("FlickrRetrofit") Retrofit retrofit) {
+        return retrofit.newBuilder().build().create(FlickrWebService.class);
     }
 
 }
