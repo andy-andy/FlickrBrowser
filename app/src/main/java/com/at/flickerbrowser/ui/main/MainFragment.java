@@ -67,7 +67,7 @@ public class MainFragment extends Fragment {
                     } else if (flickrResponseResource.getStatus() == Status.ERROR) {
                         Log.i("blah", "Error: " + flickrResponseResource.getMessage());
                     } else if (flickrResponseResource.getStatus() == Status.SUCCESS) {
-                        Log.i("blah", "Error: " + flickrResponseResource.getData());
+                        Log.i("blah", "Success: " + flickrResponseResource.getData());
                     }
                 }
             }
