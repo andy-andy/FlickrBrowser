@@ -4,19 +4,21 @@ import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 
-import com.at.flickerbrowser.models.FlickrResponse;
+import com.at.flickerbrowser.models.Item;
+
+import java.util.List;
 
 import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
 
 @Dao
-public interface FlickrResponseDao {
+public interface FlickrItemDao {
 
     @Insert(onConflict = REPLACE)
-    void save(FlickrResponse flickrResponse);
+    void save(List<Item> item);
 
-    @Query("DELETE FROM FlickrResponse")
+    @Query("DELETE FROM item")
     void deleteAll();
 
-    @Query("SELECT * FROM FlickrResponse")
-    FlickrResponse loadFlickrResponse();
+    @Query("SELECT * FROM item")
+    List<Item> loadFlickrItems();
 }

@@ -18,7 +18,6 @@ public class MainViewModel extends ViewModel {
         mFlickrRepo = flickrRepo;
     }
 
-    // TODO: Implement the ViewModel
     public LiveData<Resource<FlickrResponse>> getFlickrFeed() {
         return mFlickrRepo.getFlickrFeed();
     }

@@ -4,6 +4,7 @@ import android.arch.persistence.room.Room;
 
 import com.at.flickerbrowser.App;
 import com.at.flickerbrowser.db.AppDb;
+import com.at.flickerbrowser.db.FlickrItemDao;
 import com.at.flickerbrowser.db.FlickrResponseDao;
 
 import javax.inject.Singleton;
@@ -27,4 +28,11 @@ public class DbModule {
     public FlickrResponseDao provideFlickrResponseDao(AppDb db) {
         return db.flickrResponseDao();
     }
+
+    @Singleton
+    @Provides
+    public FlickrItemDao provideFlickrItemDao(AppDb db) {
+        return db.flickrItemDao();
+    }
+
 }

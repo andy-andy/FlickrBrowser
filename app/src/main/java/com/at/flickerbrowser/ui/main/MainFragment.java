@@ -5,20 +5,15 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.at.flickerbrowser.R;
 import com.at.flickerbrowser.activity.MainActivity;
-import com.at.flickerbrowser.models.FlickrResponse;
-import com.at.flickerbrowser.repo.Resource;
-import com.at.flickerbrowser.repo.Status;
-import com.at.flickerbrowser.viewmodels.MainViewModel;
-
-import javax.inject.Inject;
+import com.bumptech.glide.Glide;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,14 +21,38 @@ import dagger.android.support.AndroidSupportInjection;
 
 public class MainFragment extends Fragment {
 
-    @Inject
-    MainViewModel mViewModel;
+    @BindView(R.id.screen_image)
+    ImageView mScreenImage;
 
-    @BindView(R.id.refresh_btn)
-    Button mRefreshBtn;
+    private String mImageUrl;
 
-    public static MainFragment newInstance() {
-        return new MainFragment();
+    @BindView(R.id.screen_title)
+    TextView mScreenTitle;
+
+    private String mImageTitle;
+
+    private static String IMAGE_TITLE = "imageTitle";
+    private static String IMAGE_URL = "imageUrl";
+
+    public static MainFragment newInstance(String imageTitle, String imageUrl) {
+
+        final MainFragment mainFragment = new MainFragment();
+
+        final Bundle args = new Bundle();
+        args.putString(IMAGE_TITLE, imageTitle);
+        args.putString(IMAGE_TITLE, imageUrl);
+        mainFragment.setArguments(args);
+        return mainFragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Bundle arguments = getArguments();
+        if (arguments != null) {
+            mImageTitle = arguments.getString(IMAGE_TITLE);
+            mImageUrl = arguments.getString(IMAGE_URL);
+        }
     }
 
     @Override
@@ -58,19 +77,11 @@ public class MainFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mViewModel.getFlickrFeed().observe(this, new android.arch.lifecycle.Observer<Resource<FlickrResponse>>() {
-            @Override
-            public void onChanged(@Nullable Resource<FlickrResponse> flickrResponseResource) {
-                if (flickrResponseResource != null) {
-                    if (flickrResponseResource.getStatus() == Status.LOADING) {
-                        Log.i("blah", "Loading...");
-                    } else if (flickrResponseResource.getStatus() == Status.ERROR) {
-                        Log.i("blah", "Error: " + flickrResponseResource.getMessage());
-                    } else if (flickrResponseResource.getStatus() == Status.SUCCESS) {
-                        Log.i("blah", "Success: " + flickrResponseResource.getData());
-                    }
-                }
-            }
-        });
+        // Populate fields with info!
+        mScreenTitle.setText(mImageTitle);
+        // Call Glide to load image
+        Glide.with(this)
+                .load(mImageUrl)
+                .into(mScreenImage);
     }
 }

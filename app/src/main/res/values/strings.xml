@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">FlickerBrowser</string>
+    <string name="lorem_ipsum">Lorem Ipsum</string>
+    <string name="error_no_internet_connection">No Internet connection!</string>
 </resources>

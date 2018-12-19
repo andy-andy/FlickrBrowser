@@ -22,6 +22,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 ext {
@@ -66,4 +70,6 @@ dependencies {
     // Glide
     kapt 'com.github.bumptech.glide:compiler:4.8.0'
     implementation 'com.github.bumptech.glide:glide:4.8.0'
+    // ViewPager indicator
+    implementation 'com.mcxiaoke.viewpagerindicator:library:2.4.1'
 }
