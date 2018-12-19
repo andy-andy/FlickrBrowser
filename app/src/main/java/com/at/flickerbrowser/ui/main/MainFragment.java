@@ -15,6 +15,7 @@ import com.at.flickerbrowser.R;
 import com.at.flickerbrowser.activity.MainActivity;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -84,7 +85,8 @@ public class MainFragment extends Fragment {
         // Call Glide to load image
         RequestOptions options = new RequestOptions()
                 .centerCrop()
-                .placeholder(R.mipmap.ic_launcher_round)
+                .override(Target.SIZE_ORIGINAL)
+                .placeholder(R.mipmap.ic_launcher)
                 .error(R.mipmap.ic_launcher_round);
 
         Glide.with(this).load(mImageUrl).apply(options).into(mScreenImage);
