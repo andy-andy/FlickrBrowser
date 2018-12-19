@@ -29,7 +29,7 @@ public class FlickrPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return MainFragment.newInstance(mDataItems.get(position).getTitle(), mDataItems.get(position).getMedia().getM());
+        return MainFragment.newInstance(mDataItems.get(position).getDescription(), mDataItems.get(position).getMedia().getM());
     }
 
     @Override

@@ -41,7 +41,7 @@ public class MainFragment extends Fragment {
 
         final Bundle args = new Bundle();
         args.putString(IMAGE_TITLE, imageTitle);
-        args.putString(IMAGE_TITLE, imageUrl);
+        args.putString(IMAGE_URL, imageUrl);
         mainFragment.setArguments(args);
         return mainFragment;
     }
