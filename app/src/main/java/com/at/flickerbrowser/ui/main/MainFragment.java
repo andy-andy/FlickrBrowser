@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.at.flickerbrowser.R;
 import com.at.flickerbrowser.activity.MainActivity;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -79,9 +80,13 @@ public class MainFragment extends Fragment {
 
         // Populate fields with info!
         mScreenTitle.setText(mImageTitle);
+
         // Call Glide to load image
-        Glide.with(this)
-                .load(mImageUrl)
-                .into(mScreenImage);
+        RequestOptions options = new RequestOptions()
+                .centerCrop()
+                .placeholder(R.mipmap.ic_launcher_round)
+                .error(R.mipmap.ic_launcher_round);
+
+        Glide.with(this).load(mImageUrl).apply(options).into(mScreenImage);
     }
 }
