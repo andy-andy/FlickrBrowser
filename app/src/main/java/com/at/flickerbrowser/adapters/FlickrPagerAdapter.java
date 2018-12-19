@@ -1,5 +1,6 @@
 package com.at.flickerbrowser.adapters;
 
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -25,6 +26,11 @@ public class FlickrPagerAdapter extends FragmentStatePagerAdapter {
     public void setData(FlickrResponse data) {
         mDataItems = data.getItems();
         Log.i("blah", Integer.toString(data.getItems().size()));
+    }
+
+    @Override
+    public int getItemPosition(@NonNull Object object) {
+        return POSITION_NONE;
     }
 
     @Override

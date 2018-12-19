@@ -6,7 +6,9 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
+import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -49,6 +51,12 @@ public class MainActivity extends FragmentActivity {
     @BindView(R.id.splashProgressBar)
     ProgressBar mProgressBar;
 
+    @BindView(R.id.main_root_relative_layout)
+    View mLayout;
+
+    @BindView(R.id.mainSwipeContainer)
+    SwipeRefreshLayout mSwipeRefreshLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         AndroidInjection.inject(this);
@@ -76,6 +84,31 @@ public class MainActivity extends FragmentActivity {
         mFlickrPagerAdapter = new FlickrPagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mFlickrPagerAdapter);
 
+        mPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float v, int i1) {
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                enableDisableSwipeRefresh(state == ViewPager.SCROLL_STATE_IDLE);
+            }
+        });
+
+        mSwipeRefreshLayout.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        subscribeToModel();
+                    }
+                }
+        );
+
+
         //Bind the title indicator to the adapter
         CirclePageIndicator titleIndicator = findViewById(R.id.circle_indicator);
         titleIndicator.setViewPager(mPager);
@@ -93,6 +126,12 @@ public class MainActivity extends FragmentActivity {
         }
     }
 
+    private void enableDisableSwipeRefresh(boolean enable) {
+        if (mSwipeRefreshLayout != null) {
+            mSwipeRefreshLayout.setEnabled(enable);
+        }
+    }
+
     private void subscribeToModel() {
         mViewModel.getFlickrFeed().observe(this, new android.arch.lifecycle.Observer<Resource<FlickrResponse>>() {
             @Override
@@ -105,6 +144,7 @@ public class MainActivity extends FragmentActivity {
                         Log.i("blah", "Error: " + flickrResponseResource.getMessage());
                     } else if (flickrResponseResource.getStatus() == Status.SUCCESS) {
                         mProgressBar.setVisibility(ProgressBar.INVISIBLE);
+                        mSwipeRefreshLayout.setRefreshing(false);
                         mFlickrPagerAdapter.setData(flickrResponseResource.getData());
                         mFlickrPagerAdapter.notifyDataSetChanged();
                         Log.i("blah", "Success: " + flickrResponseResource.getData());
