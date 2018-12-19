@@ -108,9 +108,9 @@ public class MainActivity extends AppCompatActivity {
                 }
         );
 
-
         //Bind the title indicator to the adapter
         CirclePageIndicator titleIndicator = findViewById(R.id.circle_indicator);
+        titleIndicator.setFillColor(Color.DKGRAY);
         titleIndicator.setViewPager(mPager);
     }
 
